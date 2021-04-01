@@ -4,7 +4,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const Thing = require('./models/thing');
+
+const stuffRouter = require('./routes/thing')
 const app = express();
 
 mongoose.connect('mongodb+srv://albertbyrone:Albert254@cluster0.obns7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
@@ -22,44 +23,6 @@ app.use((req,res, next)=>{
     next();
 });
 app.use(bodyParser.json());
-app.post('/api/stuff',(req, res, next)=>{
-    const thing = new Thing({
-        title: req.body.title,
-        description: req.body.description,
-        imageUrl: req.body.imageUrl,
-        price: req.body.price,
-        userId: req.body.userId,
-    });
-    thing.save().then(()=>{
-        res.status(201).json({
-            message: " Object added to the database",
-        });
-    }).catch((error)=>{
-        res.status(400).json({
-            error: error,
-        });       
-    });
-
-});
-app.get('/api/stuff/:id',(req,res, next)=>{
-    Thing.findOne({
-        _id: req.params.id
-    }).then((thing) =>{
-        res.status(200).json(thing)
-    }).catch((error) =>{
-        res.status(404).json({
-            error: error,
-        })
-    })
-})
-app.use('/api/stuff',(req,res, next)=>{
-    Thing.find().then((things) =>{
-        res.status(200).json(things)
-    }).catch((error) =>{
-        res.status(400).json({
-            error: error,
-        });
-    });
-});
-
+///set the routing
+app.use('/api/stuff',stuffRouter )
 module.exports = app;
