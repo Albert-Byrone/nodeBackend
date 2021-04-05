@@ -44,10 +44,11 @@ exports.login = (req, res, next) =>{
                             error: new Error("Wrong password")
                         })
                     }
+                    const token = jwt.sign( {userId : user._id}, 'ALBERTBYRONETESTING', {expiresIn: '24h'})
                     //if the user exist retiurn the user
                     res.status(200).json({
                         userId: user._id,
-                        token: "token",
+                        token: token,
                     })
                 }
             ).catch(
