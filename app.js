@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const stuffRoutes = require('./routes/thing')
-const userRoutes = require('./routes/user')
+const userRouters = require('./routes/user')
 const app = express();
 
 mongoose.connect('mongodb+srv://albertbyrone:Albert254@cluster0.obns7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
@@ -27,5 +27,5 @@ app.use(bodyParser.json());
 ///set the routing
 app.use('/api/stuff',stuffRoutes );
 //user routing
-app.use('/api/auth', userRoutes);
+app.use('/api/auth', userRouters);
 module.exports = app;
