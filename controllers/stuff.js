@@ -66,7 +66,11 @@ exports.getAllThings = (req,res, next)=>{
 };
 
 exports.deleteThing = (req, res, next) =>{
-    Thing.deleteOne({_id: req.params.id}).then(
+    Thing.findOne({ _id: req.params.id }).then(
+        (thing) =>{
+            const filename = thing.imageUrl.split('/images/')[1];
+            fs.unlink('images/' + filename, ()=>{
+                  Thing.deleteOne({_id: req.params.id}).then(
         ()=>{
             res.status(200).json({
                 message: "Deleted"
@@ -77,4 +81,8 @@ exports.deleteThing = (req, res, next) =>{
             error: error
         });
     });
+            });
+        }
+    )
+  
 };
