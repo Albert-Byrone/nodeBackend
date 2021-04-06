@@ -26,6 +26,8 @@ app.use((req,res, next)=>{
 app.use(bodyParser.json());
 ///set the routing
 app.use('/api/stuff',stuffRoutes );
+//handle images route
+app.use('/images', express.static(path.join(__dirname, 'images')));
 //user routing
 app.use('/api/auth', userRouters);
 module.exports = app;
