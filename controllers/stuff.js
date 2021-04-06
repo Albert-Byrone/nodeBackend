@@ -1,4 +1,5 @@
 const Thing = require('../models/thing');
+const fs = require('fs');
 
 exports.createThing = (req, res, next)=>{
     const url = req.protocal + '://' + req.get('host');
